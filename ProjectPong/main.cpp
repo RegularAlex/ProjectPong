@@ -12,6 +12,8 @@
 //For Random usage
 #include <cstdlib>
 #include <ctime>
+//For accessing Header Files 
+#include "PlayGame.h"
 using namespace std; 
 
 //Variables 
@@ -22,6 +24,7 @@ int player_score = 0;
 int enemy_score = 0; 
 
 //Function Definitions 
+void main_menu();
 void play_game();
 SDL_Rect rectcreation(int x, int y, int width, int height, int r, int g, int b, SDL_Renderer* render);
 void text(SDL_Color Colour, SDL_Renderer* text_render, int x, int y, string text, int fontsize);
@@ -34,10 +37,81 @@ int main(int argc, char* argv[])
 	TTF_Init();
 	IMG_Init;
 	//Calling the game
-	play_game();
+	//play_game();
+	main_menu();
 	return 0;
 }
 
+void main_menu() //Main Menu Code
+{
+	//Create a window 
+	SDL_Window* PongWindow;
+	PongWindow = SDL_CreateWindow("Pong", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, ScreenWidth, ScreenHeight, SDL_WINDOW_SHOWN);
+
+	//Create a Renderer
+	SDL_Renderer* PongRenderer = NULL;
+	PongRenderer = SDL_CreateRenderer(PongWindow, -1, SDL_RENDERER_ACCELERATED);
+
+	SDL_SetRenderDrawColor(PongRenderer, 255, 255, 255, 255);
+	SDL_RenderClear(PongRenderer);
+
+	//Buttons 
+	SDL_Rect Button1 = rectcreation(100,300,250,100,0,0,0,PongRenderer); 
+	SDL_Rect Button2 = rectcreation(900,300,250,100,0,0,0,PongRenderer);
+	SDL_RenderPresent(PongRenderer);
+
+	//Colour
+	SDL_Color white = { 255,255,255 };
+	SDL_Color black = { 0,0,0 };
+	text(black, PongRenderer, 575, 50, "PONG", 50); //Title Text
+	//Button Text
+	text(white, PongRenderer, 160, 325, "1 Player", 30);
+	text(white, PongRenderer, 960, 325, "2 Players", 30);
+	SDL_RenderPresent(PongRenderer);
+	//SDL_RenderClear(PongRenderer);
+
+	SDL_Event PongMainEvent;
+	bool active = true;
+	while (active)
+	{
+		while (SDL_PollEvent(&PongMainEvent))
+		{
+			if (PongMainEvent.type == SDL_QUIT)
+			{
+				active = false;
+				break;
+			}
+
+			else if (PongMainEvent.type == SDL_MOUSEBUTTONDOWN)
+			{
+				SDL_Point MousePosition = { 0,0 };
+				SDL_GetMouseState(&MousePosition.x, &MousePosition.y);
+
+				if (SDL_PointInRect(&MousePosition, &Button1)) //1 Player Mode
+				{
+					SDL_SetRenderDrawColor(PongRenderer, 0, 0, 0, 255);
+					SDL_RenderClear(PongRenderer);
+					SDL_RenderPresent(PongRenderer);
+					cout << "Player 1 Mode" << endl;
+					PlayGame PlayerOne; 
+					PlayerOne.SinglePlayer(PongRenderer, PongWindow);
+				}
+
+				if (SDL_PointInRect(&MousePosition, &Button2)) //2 Player Mode
+				{
+					SDL_SetRenderDrawColor(PongRenderer, 0, 0, 0, 255);
+					SDL_RenderClear(PongRenderer);
+					SDL_RenderPresent(PongRenderer);
+					cout << "Player 2 Mode" << endl;
+					PlayGame PlayerTwo; 
+					PlayerTwo.TwoPlayer(PongRenderer, PongWindow);
+				}
+			}
+		}
+	}
+}
+
+//Has been moved being kept here just in case. (Player vs Computer)
 void play_game()
 {
 	//Player Variables
