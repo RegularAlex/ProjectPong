@@ -80,8 +80,8 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 
 	//Creation of Player and Enemy Rects 
 	//For the Function (X,Y,Width,Height,r,g,b,renderer)
-	SDL_Rect PlayerRect = rectcreation(1210, 350, 25, 100, 255, 255, 255, SingleRenderer);
-	SDL_Rect EnemyRect = rectcreation(20, 350, 25, 100, 255, 255, 255, SingleRenderer);
+	SDL_Rect PlayerRect = rectcreation(1190, 350, 25, 100, 255, 255, 255, SingleRenderer); //1210
+	SDL_Rect EnemyRect = rectcreation(40, 350, 25, 100, 255, 255, 255, SingleRenderer); //20 
 	SDL_RenderPresent(SingleRenderer);
 
 	//Calling Random for which way the enemy moves first
@@ -222,7 +222,7 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 			}
 		}
 		//if (BallRect.x <= 0 ) //Player Scores
-		if (BallRect.x <= (EnemyRect.x + EnemyRect.w))
+		if (BallRect.x <= (EnemyRect.x - EnemyRect.w)) 
 		{
 			if (gameover == false)
 			{
@@ -273,12 +273,13 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 				}
 			}
 			playerballcollision = false;
+
 		}
 		if (enemyballcollision == true)
 		{
+			cout << "Enemy Collision" << endl;
 			left = false;
 			right = true;
-			cout << "Enemy Collision" << endl;
 			//Sorting out the up and down movement of the ball
 			if ((up == false) && (down == true)) //Bouncing off the ball moves upwards
 			{
@@ -314,7 +315,7 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 		BallRect.y += bally_velocity;
 
 		//Code below allows for the ball to reach the edges of the screen. 
-		ballx_velocity = 0 - 20;
+		ballx_velocity = 0 - 20; // 0 - 20 works for player collision upto 0 - 40
 		bally_velocity = 0;
 
 		//Redrawing Everything onto the screen 
@@ -472,6 +473,7 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 					playery_velocity -= 100;
 					break;
 				}
+			PlayerRect.y += playery_velocity; //Updating the player position
 			}
 		}
 
@@ -551,8 +553,8 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 
 	//Creation of Player 1 and Player 2 Rects 
 	//For the Function (X,Y,Width,Height,r,g,b,renderer)
-	SDL_Rect Player1Rect = rectcreation(1210, 350, 25, 100, 255, 255, 255, DoubleRenderer);
-	SDL_Rect Player2Rect = rectcreation(20, 350, 25, 100, 255, 255, 255, DoubleRenderer);
+	SDL_Rect Player1Rect = rectcreation(1190, 350, 25, 100, 255, 255, 255, DoubleRenderer);
+	SDL_Rect Player2Rect = rectcreation(40, 350, 25, 100, 255, 255, 255, DoubleRenderer);
 	SDL_RenderPresent(DoubleRenderer);
 
 	//Calling Random for which way the ball moves first
@@ -923,6 +925,8 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 					player2y_velocity += 100;
 					break;
 				}
+				Player1Rect.y += player1y_velocity;
+				Player2Rect.y += player2y_velocity;
 			}
 		}
 
