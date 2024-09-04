@@ -589,7 +589,7 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 	{
 		right = true;
 	}
-
+	//
 	SDL_Event PongEvent;
 	bool active = true;
 	while (active)
