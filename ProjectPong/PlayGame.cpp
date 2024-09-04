@@ -49,6 +49,10 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 	int bally_velocity = 0;
 	bool reset = false;
 
+	//Contact Variables
+	bool playercontact = false; 
+	bool enemycontact = false; 
+
 	//Colours 
 	SDL_Color White{ 255,255,255 };
 	//Drawing Text
@@ -209,7 +213,7 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 		}
 
 		//if (BallRect.x >= 1250) //Enemy Scores 
-		if (BallRect.x >= (PlayerRect.x + PlayerRect.w))
+		if (BallRect.x >= (PlayerRect.x + (PlayerRect.w * 2)))
 		{
 			if (gameover == false)
 			{
@@ -242,6 +246,8 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 		if (playerballcollision == true)
 		{
 			cout << "Player Collision" << endl;
+			playercontact = true; 
+			enemycontact = false;
 			//Set the NEW direction of the ball. 
 			left = true;
 			right = false;
@@ -278,6 +284,8 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 		if (enemyballcollision == true)
 		{
 			cout << "Enemy Collision" << endl;
+			playercontact = false;
+			enemycontact = true;
 			left = false;
 			right = true;
 			//Sorting out the up and down movement of the ball
@@ -315,8 +323,23 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 		BallRect.y += bally_velocity;
 
 		//Code below allows for the ball to reach the edges of the screen. 
-		ballx_velocity = 0 - 20; // 0 - 20 works for player collision upto 0 - 40
+		ballx_velocity = 0 - 20; // 0 - 10 works for player collision upto 0 - 40 (0 - 10 works the best) 
 		bally_velocity = 0;
+
+		if (enemycontact == true)
+		{
+			ballx_velocity = 0 + 20;
+			bally_velocity = 0;
+			//left = true; 
+			//right = false;
+		}
+		if (playercontact == true)
+		{
+			ballx_velocity = 0 - 20;
+			bally_velocity = 0;
+			//right = true; 
+			//left = false; 
+		}
 
 		//Redrawing Everything onto the screen 
 		SDL_SetRenderDrawColor(SingleRenderer, 0, 0, 0, 255); //Setting colour to black
@@ -522,6 +545,9 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 	int bally_velocity = 0;
 	bool reset = false;
 
+	bool player1contact = false; 
+	bool player2contact = false;
+
 	//Colours 
 	SDL_Color White{ 255,255,255 };
 	//Text Creation
@@ -662,7 +688,7 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 			}
 		}
 		//if (BallRect.x <= 0 ) //Player 1 Scores
-		if (BallRect.x <= (Player2Rect.x + Player2Rect.w))
+		if (BallRect.x <= (Player2Rect.x - Player2Rect.w))
 		{
 			if (gameover == false)
 			{
@@ -683,6 +709,8 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 		{
 			cout << "Player Collision" << endl;
 			//Set the NEW direction of the ball. 
+			player1contact = true;
+			player2contact = false;
 			left = true;
 			right = false;
 			//Sorting out the up and down movement of the ball
@@ -717,6 +745,8 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 		if (player2ballcollision == true)
 		{
 			cout << "Player 2 Collision" << endl;
+			player1contact = false; 
+			player2contact = true; 
 			left = false;
 			right = true;
 			//Sorting out the up and down movement of the ball
@@ -756,6 +786,21 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 		//Code below allows for the ball to reach the edges of the screen. 
 		ballx_velocity = 0 - 20;
 		bally_velocity = 0;
+
+		if (player2contact == true)
+		{
+			ballx_velocity = 0 + 20;
+			bally_velocity = 0;
+			//left = true; 
+			//right = false;
+		}
+		if (player1contact == true)
+		{
+			ballx_velocity = 0 - 20;
+			bally_velocity = 0;
+			//right = true; 
+			//left = false; 
+		}
 
 		//Redrawing Everything onto the screen 
 		SDL_SetRenderDrawColor(DoubleRenderer, 0, 0, 0, 255); //Setting colour to black
@@ -820,7 +865,7 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 		if (player2_score == 10)
 		{
 			//Player 2 Wins 
-			textcreate(White, DoubleRenderer, 450, 350, "PLAYER TWO WINS!", 50);
+			textcreate(White, DoubleRenderer, 425, 350, "PLAYER TWO WINS!", 50);
 			SDL_RenderPresent(DoubleRenderer);
 			gameover = true;
 
@@ -925,8 +970,8 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 					player2y_velocity += 100;
 					break;
 				}
-				Player1Rect.y += player1y_velocity;
-				Player2Rect.y += player2y_velocity;
+				//Player1Rect.y += player1y_velocity;
+				//Player2Rect.y += player2y_velocity;
 			}
 		}
 
