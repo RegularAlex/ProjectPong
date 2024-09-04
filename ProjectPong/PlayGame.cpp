@@ -91,7 +91,7 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 	//Calling Random for which way the enemy moves first
 	srand(time(0));
 	choice = 1 + rand() % 2;
-	cout << choice << endl;
+	//cout << choice << endl;
 	if (choice == 1)
 	{
 		downboundary = true;
@@ -219,8 +219,7 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 			{
 				enemy_score += 1;
 				reset = true;
-				cout << BallRect.x << "Enemy Scores" << endl;
-				//BallRect.x == 1250; 
+				//cout << BallRect.x << "Enemy Scores" << endl;
 				up = false;
 				down = false;
 			}
@@ -233,8 +232,7 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 				player_score += 1;
 				//Resetting the ball position
 				reset = true;
-				cout << BallRect.x << "Player Scores" << endl;
-				//BallRect.x == 0; 
+				//cout << BallRect.x << "Player Scores" << endl;
 				up = false;
 				down = false;
 			}
@@ -245,7 +243,7 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 		bool enemyballcollision = Collision(EnemyRect, BallRect);
 		if (playerballcollision == true)
 		{
-			cout << "Player Collision" << endl;
+			//cout << "Player Collision" << endl;
 			playercontact = true; 
 			enemycontact = false;
 			//Set the NEW direction of the ball. 
@@ -283,7 +281,7 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 		}
 		if (enemyballcollision == true)
 		{
-			cout << "Enemy Collision" << endl;
+			//cout << "Enemy Collision" << endl;
 			playercontact = false;
 			enemycontact = true;
 			left = false;
@@ -330,15 +328,11 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 		{
 			ballx_velocity = 0 + 20;
 			bally_velocity = 0;
-			//left = true; 
-			//right = false;
 		}
 		if (playercontact == true)
 		{
 			ballx_velocity = 0 - 20;
 			bally_velocity = 0;
-			//right = true; 
-			//left = false; 
 		}
 
 		//Redrawing Everything onto the screen 
@@ -363,8 +357,8 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 			//Without code below the ball just goes in one direction and continously scores
 			BallRect.x = 610;
 			BallRect.y = 350;
-			cout << BallRect.x << " .x Reset 1" << endl;
-			cout << BallRect.y << " .y Reset 1" << endl;
+			//cout << BallRect.x << " .x Reset 1" << endl;
+			//cout << BallRect.y << " .y Reset 1" << endl;
 			//Without the code below the ball spawns but moves crazily around
 			ballx_velocity = 0;
 			bally_velocity = 0;
@@ -453,8 +447,8 @@ void PlayGame::SinglePlayer(SDL_Renderer* SingleRenderer, SDL_Window * SingleWin
 					//Reseting X and Y positions
 					BallRect.x = 610;
 					BallRect.y = 350;
-					cout << BallRect.x << " .x Reset 2" << endl;
-					cout << BallRect.y << " .y Reset 2" << endl;
+					//cout << BallRect.x << " .x Reset 2" << endl;
+					//cout << BallRect.y << " .y Reset 2" << endl;
 					//Reseting the balls x and y velocity
 					ballx_velocity = 0;
 					bally_velocity = 0;
@@ -545,6 +539,7 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 	int bally_velocity = 0;
 	bool reset = false;
 
+	//Collision Variables
 	bool player1contact = false; 
 	bool player2contact = false;
 
@@ -585,7 +580,7 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 
 	//Calling Random for which way the ball moves first
 	srand(time(0));
-	direction = 1 + rand() % 2;
+	//direction = 1 + rand() % 2;
 	if (direction == 1)
 	{
 		left = true;
@@ -680,8 +675,7 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 			{
 				player2_score += 1;
 				reset = true;
-				cout << BallRect.x << "Player 2 Scores" << endl;
-				//BallRect.x == 1250; 
+				//cout << BallRect.x << "Player 2 Scores" << endl;
 				up = false;
 				down = false;
 			}
@@ -694,8 +688,7 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 				player1_score += 1;
 				//Resetting the ball position
 				reset = true;
-				cout << BallRect.x << "Player 1 Scores" << endl;
-				//BallRect.x == 0; 
+				//cout << BallRect.x << "Player 1 Scores" << endl;
 				up = false;
 				down = false;
 			}
@@ -706,7 +699,7 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 		bool player2ballcollision = Collision(Player2Rect, BallRect);
 		if (player1ballcollision == true)
 		{
-			cout << "Player Collision" << endl;
+			//cout << "Player 1 Collision" << endl;
 			//Set the NEW direction of the ball. 
 			player1contact = true;
 			player2contact = false;
@@ -744,7 +737,7 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 
 		if (player2ballcollision == true)
 		{
-			cout << "Player 2 Collision" << endl;
+			//cout << "Player 2 Collision" << endl;
 			player1contact = false; 
 			player2contact = true; 
 			left = false;
@@ -791,15 +784,11 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 		{
 			ballx_velocity = 0 + 20;
 			bally_velocity = 0;
-			//left = true; 
-			//right = false;
 		}
 		if (player1contact == true)
 		{
 			ballx_velocity = 0 - 20;
 			bally_velocity = 0;
-			//right = true; 
-			//left = false; 
 		}
 
 		//Redrawing Everything onto the screen 
@@ -824,8 +813,8 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 			//Without code below the ball just goes in one direction and continously scores
 			BallRect.x = 610;
 			BallRect.y = 350;
-			cout << BallRect.x << " .x Reset 1" << endl;
-			cout << BallRect.y << " .y Reset 1" << endl;
+			//cout << BallRect.x << " .x Reset 1" << endl;
+			//cout << BallRect.y << " .y Reset 1" << endl;
 			//Without the code below the ball spawns but moves crazily around
 			ballx_velocity = 0;
 			bally_velocity = 0;
@@ -921,8 +910,8 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 					//Reseting X and Y positions
 					BallRect.x = 610;
 					BallRect.y = 350;
-					cout << BallRect.x << " .x Reset 2" << endl;
-					cout << BallRect.y << " .y Reset 2" << endl;
+					//cout << BallRect.x << " .x Reset 2" << endl;
+					//cout << BallRect.y << " .y Reset 2" << endl;
 					//Reseting the balls x and y velocity
 					ballx_velocity = 0;
 					bally_velocity = 0;
@@ -970,8 +959,8 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 					player2y_velocity -= 100;
 					break;
 				}
-				//Player1Rect.y += player1y_velocity;
-				//Player2Rect.y += player2y_velocity;
+				Player1Rect.y += player1y_velocity;
+				Player2Rect.y += player2y_velocity;
 			}
 		}
 
