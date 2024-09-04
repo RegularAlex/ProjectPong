@@ -640,7 +640,6 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 			bally_velocity += 50;
 		}
 
-
 		//Collisions with boundaries
 		if (BallRect.y >= 750) //Should bounce upwards
 		{
@@ -742,6 +741,7 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 			}
 			player1ballcollision = false;
 		}
+
 		if (player2ballcollision == true)
 		{
 			cout << "Player 2 Collision" << endl;
@@ -964,10 +964,10 @@ void PlayGame::TwoPlayer(SDL_Renderer* DoubleRenderer, SDL_Window * DoubleWindow
 					player1y_velocity -= 100;
 					break;
 				case SDLK_w:
-					player2y_velocity -= 100;
+					player2y_velocity += 100;
 					break;
 				case SDLK_s:
-					player2y_velocity += 100;
+					player2y_velocity -= 100;
 					break;
 				}
 				//Player1Rect.y += player1y_velocity;

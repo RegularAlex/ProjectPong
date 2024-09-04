@@ -609,6 +609,7 @@ void play_game()
 	IMG_Quit; 
 }
 
+//Being used here for the creation of rects, which for the main menu are being used as buttons
 SDL_Rect rectcreation(int x, int y, int width, int height, int r, int g, int b, SDL_Renderer* render)
 {
 	SDL_Rect button;
@@ -622,6 +623,7 @@ SDL_Rect rectcreation(int x, int y, int width, int height, int r, int g, int b, 
 	return button;
 }
 
+//Being used for the creation of text, which for the main menu is being used for the title and button text. 
 void text(SDL_Color Colour, SDL_Renderer* text_render, int x, int y, string text, int fontsize)
 {
 	//Creation of Font
@@ -677,6 +679,4 @@ bool checkCollision(SDL_Rect a, SDL_Rect b)
 
 	//If there has been a collision 
 	return true;
-
-
 }
